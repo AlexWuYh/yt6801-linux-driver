@@ -2,6 +2,10 @@
 #
 # Motorcomm YT6801 PCIe 千兆网卡 Linux 内核驱动 —— 一键安装/卸载脚本
 #
+# 项目主页:  https://github.com/AlexWuYh/yt6801-linux-driver
+# 许可证:    MIT
+# 适用系统:  Linux(在 macOS/BSD 上运行会被拒绝)
+#
 # 项目结构(适配本仓库的当前布局):
 #   .
 #   ├── Makefile
@@ -11,13 +15,20 @@
 #   │   └── motorcomm         # initramfs hook(Kylin 系统使用)
 #   └── yt_nic_install.sh
 #
+# 权限:  install / uninstall / reload 子命令需要 root 权限(写入 /lib/modules、
+#        加载/卸载内核模块、配置 /etc/modules-load.d 等)。脚本会自动调用 sudo,
+#        也可以直接以 root 身份运行:
+#            sudo ./yt_nic_install.sh           # 或
+#            su -c './yt_nic_install.sh'        # 切换到 root 后
+#        仅有 status / help 子命令不需要 root 权限。
+#
 # 用法:
-#   ./yt_nic_install.sh                # 安装驱动(默认)
+#   ./yt_nic_install.sh                # 安装驱动(默认,需 root)
 #   ./yt_nic_install.sh install        # 等价于不带参数
-#   ./yt_nic_install.sh uninstall      # 卸载驱动
-#   ./yt_nic_install.sh reload         # 重新加载驱动
-#   ./yt_nic_install.sh status         # 查看驱动加载/网卡状态
-#   ./yt_nic_install.sh help           # 显示帮助
+#   ./yt_nic_install.sh uninstall      # 卸载驱动(需 root)
+#   ./yt_nic_install.sh reload         # 重新加载驱动(需 root)
+#   ./yt_nic_install.sh status         # 查看驱动加载/网卡状态(无需 root)
+#   ./yt_nic_install.sh help           # 显示帮助(无需 root)
 #
 
 set -u
